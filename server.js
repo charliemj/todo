@@ -8,7 +8,7 @@ var methodOverride = require("method-override"); // simulate DELETE and PUT (exp
 
 // configuration
 
-mongoose.connect("mongodb://localhost/todoapp");
+mongoose.connect("mongodb://localhost/todoapp3");
 
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
@@ -21,7 +21,8 @@ app.use(methodOverride());
 //model
 
 var Todo = mongoose.model("Todo",{
-    text:String
+    text:String,
+    time: String
 });
 
 
@@ -47,6 +48,7 @@ app.post('/api/todos', function(req,res){
     // create a todo, information comes from AJAX request from Angular
     Todo.create({
         text: req.body.text,
+        time: req.body.time,
         done : false
     }, function(err, todo){
         if (err){
