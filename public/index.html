@@ -56,7 +56,24 @@
                 </form>
             </div>
         </div>
+        <!-- DONE LIST -->
+        <div class="jumbotron text-center">
+            <h1>Completed Tasks</h1>
+        </div>
+        <div id="todo-list" class="row">
+            <div class="col-sm-4 col-sm-offset-4">
 
+                <!-- LOOP OVER THE DONES IN $scope.dones -->
+                <div ng-if="data.length > 1">
+                    <div ng-repeat="done in dones">
+                        <label>
+                            {{done.text}} is done! 
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
 </body>

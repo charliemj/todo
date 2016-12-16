@@ -8,7 +8,7 @@ var methodOverride = require("method-override"); // simulate DELETE and PUT (exp
 
 // configuration
 
-mongoose.connect("mongodb://localhost/todoapp3");
+mongoose.connect("mongodb://localhost/todoapp4");
 
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
@@ -22,7 +22,8 @@ app.use(methodOverride());
 
 var Todo = mongoose.model("Todo",{
     text:String,
-    time: String
+    time: String,
+    done: Boolean
 });
 
 
@@ -39,7 +40,27 @@ app.get('/api/todos', function(req,res){
             res.send(err);
         }//end if
 
-        res.json(todos); // return all todos in JSON format
+        else{
+        // get and return all the todos after you create another
+            Todo.find({done:false},function(err,todos){
+                if (err){
+                    res.send(err);
+                }//end if
+                else{
+                    Todo.find({done:true},function(err,dones){
+                        if (err){
+                            res.send(err);
+                        }//end if
+                        else if (dones.length >0){
+                        res.json([todos,dones]); 
+                        }//end else if
+                        else{
+                            res.json([todos]);
+                        }
+                    });
+                }//end else
+            });
+        }//end else
     });
 });
 
@@ -54,36 +75,60 @@ app.post('/api/todos', function(req,res){
         if (err){
             res.send(err);
         }//end if
-
+        else{
         // get and return all the todos after you create another
-        Todo.find(function(err,todos){
-            if (err){
-                res.send(err);
-            }//end if
-
-            res.json(todos);
-        });
+            Todo.find({done:false},function(err,todos){
+                if (err){
+                    res.send(err);
+                }//end if
+                else{
+                    Todo.find({done:true},function(err,dones){
+                        if (err){
+                            res.send(err);
+                        }//end if
+                        else if (dones.length >0){
+                        res.json([todos,dones]); 
+                        }//end else if
+                        else{
+                            res.json([todos]);
+                        }
+                    });
+                }//end else
+            });
+        }//end else
     });
 });
 
 //delete a todo
 
-app.delete("/api/todos/:todo_id",function(req,res){
-    Todo.update({
-        _id : req.params.todo_id
-    }, function(err, todo){
+app.put("/api/todos/:todo_id",function(req,res){
+    Todo.update({_id : req.params.todo_id}, {done:true},
+        function(err, todo){
         if (err){
             res.send(err);
         }//end if
+        else{
+            // get and return all the todos after you create another
+            Todo.find({done:false},function(err,todos){
+                if (err){
+                    res.send(err);
+                }//end if
+                else{
 
-        // get and return all the todos after you create another
-        Todo.find(function(err, todos){
-            if (err){
-                res.send(err);
-            }//end if
-
-            res.json(todos);
-        });
+                    Todo.find({done:true},function(err,dones){
+                        if (err){
+                            res.send(err);
+                        }//end if
+                        else if (dones.length >0){
+                        res.json([todos,dones]);
+                        }//end else if 
+                        else{
+                            res.json([todos]);
+                        }
+                    });
+                }//end else
+            });
+        } //end else
     });
 });
 

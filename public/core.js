@@ -12,7 +12,10 @@ function mainController($scope, $http){
 
     $http.get('/api/todos')
         .success(function(data){
-            $scope.todos = data;
+            $scope.todos = data[0];
+            if (data.length > 1){
+                $scope.dones = data[1];
+            }
             console.log(data);
         })
 
@@ -25,7 +28,10 @@ function mainController($scope, $http){
         $http.post("/api/todos", $scope.formData)
             .success(function(data){
                 $scope.formData = {}; // clear the form so our user is ready to enter another
-                $scope.todos = data;
+                $scope.todos = data[0];
+                if (data.length > 1){
+                    $scope.dones = data[1];
+                }
                 console.log(data);
             })
             .error(function(data){
@@ -33,11 +39,14 @@ function mainController($scope, $http){
             });
     };
 
-    // delete a todo after checking it
+    // "delete" a todo after checking it
     $scope.deleteTodo = function(id){
-        $http.delete("/api/todos/"+id)
+        $http.put("/api/todos/"+id)
             .success(function(data){
-                $scope.todos = data;
+                $scope.todos = data[0];
+                if (data.length > 1){
+                    $scope.dones = data[1];
+                }
                 console.log(data);
             })
             .error(function(data){
