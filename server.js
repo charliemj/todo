@@ -99,7 +99,7 @@ app.post('/api/todos', function(req,res){
     });
 });
 
-//delete a todo
+//"delete" a todo
 
 app.put("/api/todos/:todo_id",function(req,res){
     Todo.update({_id : req.params.todo_id}, {done:true},
@@ -131,6 +131,28 @@ app.put("/api/todos/:todo_id",function(req,res){
         } //end else
     });
 });
+
+// actually delete a todo (once it is done)
+app.delete('/api/todos/:todo_id', function(req, res) {
+        Todo.remove({
+            _id : req.params.todo_id
+        }, function(err, todo) {
+            if (err){
+                res.send(err);
+            }
+            // get and return all the todos after you create another
+            else{
+                Todo.find({done:true},function(err, dones) {
+                    if (err){
+                        res.send(err)
+                    }
+                    else{
+                    res.json(dones);
+                    }
+                });
+            }
+        });
+    });
 
 // application **Important to define this after the API routes that are above (otherwise weird errors)**
 

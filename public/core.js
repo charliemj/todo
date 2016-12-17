@@ -39,8 +39,8 @@ function mainController($scope, $http){
             });
     };
 
-    // "delete" a todo after checking it
-    $scope.deleteTodo = function(id){
+    // "update a todo after checking it (to done)
+    $scope.updateTodo = function(id){
         $http.put("/api/todos/"+id)
             .success(function(data){
                 $scope.todos = data[0];
@@ -53,4 +53,20 @@ function mainController($scope, $http){
                 console.log("Error: "+data);
             });
     };
+
+    //delete a done todo
+    $scope.deleteTodo = function(id) {
+        $http.delete('/api/todos/' + id)
+            .success(function(data) {
+                
+                $scope.dones = data;
+                  
+                console.log(data);
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+    };
+
+
 };

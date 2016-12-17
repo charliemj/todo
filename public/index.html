@@ -32,7 +32,7 @@
                 <!-- LOOP OVER THE TODOS IN $scope.todos -->
                 <div class="checkbox" ng-repeat="todo in todos">
                     <label>
-                        <input type="checkbox" ng-click="deleteTodo(todo._id)">{{ todo.text}} should take {{todo.time}} hours
+                        <input type="checkbox" ng-click="updateTodo(todo._id)">{{ todo.text}} should take {{todo.time}} hours
                     </label>
                 </div>
 
@@ -65,9 +65,9 @@
 
                 <!-- LOOP OVER THE DONES IN $scope.dones -->
                 <div ng-if="data.length > 1">
-                    <div ng-repeat="done in dones">
+                    <div class="checkbox" ng-repeat="done in dones">
                         <label>
-                            {{done.text}} is done! 
+                            <input type="checkbox" ng-click="deleteTodo(done._id)">{{done.text}} is done! 
                         </label>
                     </div>
                 </div>
