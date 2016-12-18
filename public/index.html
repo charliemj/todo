@@ -21,58 +21,98 @@
 
 <body ng-controller="mainController">
     <div class="container">
-        <!-- HEADER AND TODO COUNT -->
-        <div class="jumbotron text-center">
-            <h1>I'm a Todo-aholic </h1>
-        </div>
-        <!-- TODO LIST -->
-        <div id="todo-list" class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-
-                <!-- LOOP OVER THE TODOS IN $scope.todos -->
-                <div class="checkbox" ng-repeat="todo in todos">
-                    <label>
-                        <input type="checkbox" ng-click="updateTodo(todo._id)">{{ todo.text}} should take {{todo.time}} hours
-                    </label>
-                </div>
-
+        <div class="todosection" style="width: 45%;float:left;">
+            <!-- HEADER AND TODO COUNT -->
+            <div class="jumbotron text-center">
+                <h1>To Do</h1>
             </div>
-        </div>
+            <!-- TODO LIST -->
+            <div id="todo-list" class="row">
+                <div class="col-sm-4 col-sm-offset-4">
 
-        <!-- FORM TO CREATE TODOS -->
-        <div id="todo-form" class="row">
-            <div class="col-sm-8 col-sm-offset-2 text-center">
-                <form>
-                    <div class="form-group">
-
-                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                        <input type="text" class="form-control input-lg text-center" placeholder="Task" ng-model="formData.text">
-                        <input type="text" class="form-control input-lg text-center" placeholder="Time for task" ng-model="formData.time">
-                    </div>
-                    
-
-                    <!-- createToDo() WILL CREATE NEW TODOS -->
-                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
-                </form>
-            </div>
-        </div>
-        <!-- DONE LIST -->
-        <div class="jumbotron text-center">
-            <h1>Completed Tasks</h1>
-        </div>
-        <div id="todo-list" class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-
-                <!-- LOOP OVER THE DONES IN $scope.dones -->
-                <div ng-if="data.length > 1">
-                    <div class="checkbox" ng-repeat="done in dones">
+                    <!-- LOOP OVER THE TODOS IN $scope.todos -->
+                    <div class="checkbox" ng-repeat="todo in todos">
                         <label>
-                            <input type="checkbox" ng-click="deleteTodo(done._id)">{{done.text}} is done! 
+                            <input type="checkbox" ng-click="updateTodo(todo._id)">{{ todo.text}} should take {{todo.time}} hours
                         </label>
                     </div>
-                </div>
 
+                </div>
             </div>
+
+            <!-- FORM TO CREATE TODOS -->
+            <div id="todo-form" class="row">
+                <div class="col-sm-8 col-sm-offset-2 text-center">
+                    <form>
+                        <div class="form-group">
+
+                            <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                            <input type="text" class="form-control input-lg text-center" placeholder="Task" ng-model="formData.text">
+                            <input type="text" class="form-control input-lg text-center" placeholder="Time for task" ng-model="formData.time">
+                        </div>
+                        
+
+                        <!-- createToDo() WILL CREATE NEW TODOS -->
+                        <button type="submit" style="margin-bottom:10px;" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+                    </form>
+                </div>
+            </div>
+            <!-- DONE LIST -->
+            <div class="jumbotron text-center">
+                <h2>Completed Tasks</h2>
+            </div>
+            <div id="todo-list" class="row">
+                <div class="col-sm-4 col-sm-offset-4">
+
+                    <!-- LOOP OVER THE DONES IN $scope.dones -->
+                    <div ng-if="data.length > 1">
+                        <div class="checkbox" ng-repeat="done in dones">
+                            <label>
+                                <input type="checkbox" ng-click="deleteTodo(done._id)">{{done.text}} is done! 
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    
+        <div class="queue"style="width: 45%;float:right; top:0;">
+            <!-- HEADER AND QUEUE -->
+            <div class="jumbotron text-center">
+                <h1>QUEUE</h1>
+            </div>
+            <!-- QUEUE LIST -->
+            <div id="todo-list" class="row">
+                <div class="col-sm-4 col-sm-offset-4">
+
+                    <!-- LOOP OVER THE ITEMS IN $scope.items -->
+                    <div class="checkbox" ng-repeat="item in items">
+                        <label>
+                            <input type="checkbox" ng-click="deleteItem(item._id)">{{item.text}}
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- FORM TO CREATE ITEMS -->
+            <div id="todo-form" class="row">
+                <div class="col-sm-8 col-sm-offset-2 text-center">
+                    <form>
+                        <div class="form-group">
+
+                            <!-- BIND THIS VALUE TO formData.item IN ANGULAR -->
+                            <input type="text" class="form-control input-lg text-center" placeholder="Item" ng-model="formDataQ.item">
+                        </div>
+                        
+
+                        <!-- createToDo() WILL CREATE NEW ITEMS -->
+                        <button type="submit" style="margin-bottom:10px;" class="btn btn-primary btn-lg" ng-click="createItem()">Add</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 

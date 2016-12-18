@@ -7,6 +7,7 @@ var scotchTodo = angular.module("scotchTodo", []);
 
 function mainController($scope, $http){
     $scope.formData = {};
+    $scope.formDataQ = {};
     
     // when landing on the page, get all todos and show them
 
@@ -22,6 +23,7 @@ function mainController($scope, $http){
         .error(function(data){
             console.log("Error: " + data);
         });
+
     // when landing on the page, get all todos and show them
 
     $scope.createTodo = function(){
@@ -36,7 +38,7 @@ function mainController($scope, $http){
             })
             .error(function(data){
                 console.log("Error: " + data);
-            });
+        });
     };
 
     // "update a todo after checking it (to done)
@@ -65,8 +67,45 @@ function mainController($scope, $http){
             })
             .error(function(data) {
                 console.log('Error: ' + data);
-            });
+        });
     };
 
+    // when landing on the page, get all items in queue and show them
+
+    $http.get('/api/queue')
+        .success(function(data){
+            $scope.items = data[0];
+            console.log(data);
+        })
+
+        .error(function(data){
+            console.log("Error: " + data);
+        });
+
+    // when landing on the page, get all items and show them
+
+    $scope.createItem = function(){
+        $http.post("/api/queue", $scope.formDataQ)
+            .success(function(data){
+                $scope.formDataQ = {}; // clear the form so our user is ready to enter another
+                $scope.items = data[0];
+                console.log(data);
+            })
+            .error(function(data){
+                console.log("Error: " + data);
+        });
+    };
+
+    //delete an item
+    $scope.deleteItem = function(id) {
+        $http.delete('/api/queue/' + id)
+            .success(function(data) {
+                $scope.items = data;
+                console.log(data);
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+        });
+    };
 
 };
