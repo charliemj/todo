@@ -89,7 +89,7 @@
                     <!-- LOOP OVER THE ITEMS IN $scope.items -->
                     <div class="checkbox" ng-repeat="item in items">
                         <label>
-                            <input type="checkbox" ng-click="deleteItem(item._id)">{{item.text}}
+                            <input type="checkbox" ng-click="deleteItem(item._id)"><a href={{item.text}}>{{item.text}}</a>
                         </label>
                     </div>
 
