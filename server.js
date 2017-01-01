@@ -158,7 +158,7 @@ app.delete('/api/todos/:todo_id', function(req, res) {
 
 //Queue routes
 
-//GET all todos
+//GET all queued items
 
 app.get('/api/queue', function(req,res){
 
