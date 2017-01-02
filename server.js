@@ -146,7 +146,7 @@ app.delete('/api/todos/:todo_id', function(req, res) {
         else{
             Todo.find({done:true},function(err, dones) {
                 if (err){
-                    res.send(err)
+                    res.send(err);
                 }//end if
                 else{
                 res.json(dones);
@@ -233,7 +233,7 @@ app.delete('/api/queue/:item_id', function(req, res) {
         else{
             Item.find(function(err, items) {
                 if (err){
-                    res.send(err)
+                    res.send(err);
                 }//end if
                 else{
                 res.json(items);
